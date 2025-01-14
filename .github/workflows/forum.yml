@@ -25,7 +25,7 @@ jobs:
       # Build the Docker image
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fan_asteroid_forum:latest -f build/leaderboard-api/Dockerfile build/forum
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fan_asteroid_forum:latest -f build/html/Dockerfile build/html
 
       # Push the Docker image
       - name: Push Docker Image
