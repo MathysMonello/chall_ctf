@@ -1,0 +1,33 @@
+h1 {
+  font-size: 60px;
+  text-align: center;
+  text-shadow : #F97D37 1px 0 50px;
+    color : #efce13;
+}
+
+body{
+  background: black;
+  color : white;
+}
+
+p{
+  color: yellow;
+  border: 20px orange 
+}
+
+li {
+  border-top: 2px solid #E16925;
+  padding: .5em;
+
+}
+
+li:hover{
+    background: grey;
+    box-shadow: 1px 1px 1px 3px red;
+      cursor: pointer;
+    background: radial-gradient(#E16925, red);
+  }
+
+#sous-titre{
+  font-size: 32px;
+}

@@ -1,0 +1,41 @@
+.fan-asteroid-api:
+  variables:
+    image: "fan-asteroid-api"
+    folder: challenges/fan-asteroid
+    image_name: fan-asteroid-api
+
+.fan-asteroid-forum:
+  variables:
+    image: "fan-asteroid-forum"
+    folder: challenges/fan-asteroid
+    image_name: fan-asteroid-forum
+
+.fan-asteroid-game:
+  variables:
+    image: "fan-asteroid-game"
+    folder: challenges/fan-asteroid
+    image_name: fan-asteroid-game
+
+fan-asteroid-game/docker:
+  extends: [ .docker-build, .fan-asteroid-game ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/fan-asteroid/build/game/Dockerfile
+    docker_context: challenges/fan-asteroid/build/game
+
+fan-asteroid-forum/docker:
+  extends: [ .docker-build, .fan-asteroid-forum ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/fan-asteroid/build/html/Dockerfile
+    docker_context: challenges/fan-asteroid/build/html
+
+fan-asteroid-api/docker:
+  extends: [ .docker-build, .fan-asteroid-api ]
+  stage: challenges
+  needs: [ ]
+  variables:
+    dockerfile: challenges/fan-asteroid/build/leaderboard-api/Dockerfile
+    docker_context: challenges/fan-asteroid/build/leaderboard-api

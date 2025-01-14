@@ -1,0 +1,133 @@
+:root {
+    --main-color: #fff;
+    --glow-color-1: #dcdd82;
+    --glow-color-3: #d6c772;
+  }
+
+  html {
+    background-color: black;
+    color: white;
+    height: 100vh;
+    width:100vw;
+    margin: 0;
+    overflow: hidden;
+  }
+
+  body{
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .glow {
+    text-align: center;
+    margin-top: 20px;
+    position: relative; /* Permet d'utiliser z-index */
+    z-index: 10;
+    font-size: 80px;
+    color: var(--main-color);
+    text-align: center;
+    -webkit-animation: glow 1s ease-in-out infinite alternate;
+    -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+  }
+
+  h3{
+    text-align: center;
+    margin-top: 20px;
+    position: relative; 
+    z-index: 10;
+    font-size: 20px;
+    width: 50vw;
+    color: rgb(255, 145, 0);
+  }
+
+  form{
+    display: flex;
+    flex-direction: column;
+  }
+
+  label{
+    text-align: center;
+  }
+
+  button {
+    margin: 10px;
+    background-color: #aa4604; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 999px;
+  }
+
+  @-webkit-keyframes glow {
+    from {
+      text-shadow: 
+        0 0 10px var(--main-color), 
+        0 0 20px var(--main-color), 
+        0 0 30px var(--glow-color-1), 
+        0 0 40px var(--glow-color-1), 
+        0 0 50px var(--glow-color-1), 
+        0 0 60px var(--glow-color-1), 
+        0 0 70px var(--glow-color-1);
+    }
+    to {
+      text-shadow: 
+        0 0 20px var(--main-color), 
+        0 0 30px var(--glow-color-3), 
+        0 0 40px var(--glow-color-3), 
+        0 0 50px var(--glow-color-3), 
+        0 0 60px var(--glow-color-3), 
+        0 0 70px var(--glow-color-3), 
+        0 0 80px var(--glow-color-3);
+    };
+  }
+#asteroid1 {
+    z-index: 1;
+    position: absolute;
+    bottom: 0px;
+    right: 300px;
+    animation: zoomAsteroid 5s linear infinite;
+}
+
+#asteroid2 {
+    z-index: 1;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    animation: zoomAsteroid 5s linear infinite;
+}
+
+#asteroid3 {
+    z-index: 1;
+    position: absolute;
+    top: 0px;
+    right: 50px;
+    animation: zoomAsteroid 5s linear infinite;
+}
+
+input[type=text] {
+    margin: 10px;
+    box-shadow: 0 0 25px white;
+    border: none;
+    color: rgb(255, 0, 0);
+}
+
+
+@keyframes zoomAsteroid {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

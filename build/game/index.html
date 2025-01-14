@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cercles avec Compteur de Cœurs</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+        h1{
+            color: red;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #414141;
+            cursor: url('rocket1.png') 32 32, pointer;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        #leaderboard {
+            color: rgb(255, 255, 255);
+            margin-bottom: 20px;
+        }
+        #pseudo, #startButton {
+            padding: 10px;
+            font-size: 16px;
+        }
+        #startButton {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="leaderboard"></div>
+    <h1>Atteins le score de 10000 pour entrer dans le Hall of Fame !</h1>
+    <input id="pseudo" placeholder="Entrez votre pseudo"></input>
+    <button id="startButton">Commencer le jeu</button>
+    <script>
+        function getLeaderboard() {
+            fetch('http://localhost:3000/leaderboard')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erreur lors de la récupération du leaderboard');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const leaderboardDiv = document.getElementById('leaderboard');
+                    leaderboardDiv.innerHTML = ''; // Efface le contenu actuel
+
+                    data.forEach((entry, index) => {
+                        const entryDiv = document.createElement('div');
+                        entryDiv.textContent = `${index + 1}. ${entry.name}: ${entry.score}`;
+                        leaderboardDiv.appendChild(entryDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+        }
+
+        // Fonction de redirection
+        document.getElementById('startButton').addEventListener('click', () => {
+            const pseudo = document.getElementById('pseudo').value.trim();
+
+            if (pseudo) {
+                // Redirige vers la page de jeu avec le pseudo en paramètre
+                window.location.href = `game.html?pseudo=${encodeURIComponent(pseudo)}`;
+            } else {
+                alert('Veuillez entrer un pseudo pour commencer le jeu.');
+            }
+        });
+
+        // Charger le leaderboard au démarrage
+        getLeaderboard();
+    </script>
+</body>
+</html>

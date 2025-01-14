@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cercles avec Compteur de Cœurs</title>
+    <style>
+        html{
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #202127;
+            cursor: url('rocket1.png') 32 32, pointer; 
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .circle {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .draw{
+            height: 100%;
+            width: 100%;
+            border-radius: 50%;
+            animation: grow 0.1s;
+        }
+        .blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Assurez-vous que cet élément soit au-dessus */
+            background-color: red;
+            animation: blink 0.5s infinite;
+        }
+        #heartCounter {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: red;
+            
+        }
+        #scoreCounter {
+            position: fixed;
+            top: 40px;
+            left: 10px;
+            font-size: 24px;
+            color: white;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 0}
+            50%  { opacity: 0.5}    
+        }
+
+        @keyframes grow {
+            0% { 
+                transform: scale(0.5);
+                opacity:0;
+            };
+            100%{ 
+                transform: scale(1);
+                opacity:1;
+            };
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="main">
+    <script>
+        const colors = ['rgb(161, 96, 96)', 'rgb(175, 141, 141)', 'rgb(204, 107, 107)','rgb(94, 51, 51)','rgb(85, 68, 68)'];
+        const circles = [];
+        let heartCount = 3;
+        let animationStarted = false;
+        let invincible = false;
+        let score = 0;
+        const urlParams = new URLSearchParams(window.location.search);
+        const pseudo = urlParams.get('pseudo');
+        let timers = 0;
+        const max = 60;
+
+        function incrementTimer(value) {
+            return (value + 3) % 459;
+        }
+
+
+        // Fonction pour créer un cercle
+        function createCircle(size = Math.random() * 200 + 20, posX = null, posY = null) {
+            const circle= document.createElement('div');
+            circle.className = 'circle';
+            circle.style.width = circle.style.height = `${size}px`;
+            circle.style.left = posX ? `${posX}px` : `${Math.random() * (window.innerWidth - size)}px`;
+            circle.style.top = posY ? `${posY}px` : `${Math.random() * (window.innerHeight - size)}px`;
+            document.getElementById('main').appendChild(circle);
+
+            const draw= document.createElement('div');
+            draw.className = 'draw';
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            draw.style.backgroundColor = color;
+            draw.style.boxShadow = "0 0 20px " + color;
+            circle.appendChild(draw);
+
+            const speedMultiplier = Math.min(100 / size + score/50, 5);
+            circles.push({
+                element: circle,
+                dx: (Math.random() * 2 + 1) * speedMultiplier * (Math.random() < 0.5 ? -1:1),
+                dy: (Math.random() * 2 + 1) * speedMultiplier * (Math.random() < 0.5? -1:1),
+                size: size,
+                originalColor: circle.style.backgroundColor,
+                invincible: false
+            });
+        }
+
+        for (let i = 0; i < 5; i++) {
+            createCircle();
+        }
+
+        function detectCollision(circleA, circleB) {
+            const rectA = circleA.element.getBoundingClientRect();
+            const rectB = circleB.element.getBoundingClientRect();
+            const dx = (rectA.left + rectA.width / 2) - (rectB.left + rectB.width / 2);
+            const dy = (rectA.top + rectA.height / 2) - (rectB.top + rectB.height / 2);
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            return distance < (circleA.size / 2 + circleB.size / 2);
+        }
+
+        function splitCircle(circle) {
+            const size = circle.size / 1.7;
+            if (size < 15 || circle.invincible) {
+                return;
+            }
+
+            for (let i = 0; i < 2; i++) {
+                let posX = parseFloat(circle.element.style.left) +(size* (i === 0 ? 1 : -1));
+                let posY = parseFloat(circle.element.style.top) + (size* (i === 0 ? 1 : -1));
+
+                
+
+                createCircle(size, posX, posY);
+                const newCircle = circles[circles.length - 1];
+                newCircle.dx = circle.dx * (i === 0 ? 1.2 : -1.2);
+                newCircle.dy = circle.dy * (i === 0 ? 1.2 : -1.2);
+                newCircle.invincible = true;
+                newCircle.element.childNodes[0].style.backgroundColor = circle.element.childNodes[0].style.backgroundColor;
+                newCircle.element.childNodes[0].style.boxShadow = "0 0 20px " + circle.element.childNodes[0].style.backgroundColor;
+                setTimeout(() => {
+                    newCircle.invincible = false; 
+                }, 250);
+            }
+
+            circle.element.remove();
+            const index = circles.indexOf(circle);
+            if (index > -1) circles.splice(index, 1);
+        }
+
+        function animate() {
+            circles.forEach(circle => {
+                const rect = circle.element.getBoundingClientRect();
+
+                const touchWall = 
+                    (rect.left + circle.dx > window.innerWidth - rect.width || rect.left + circle.dx < 0) ||
+                    (rect.top + circle.dy > window.innerHeight - rect.height || rect.top + circle.dy < 0);
+
+                if (circle.size <= 30 && touchWall) {
+                    circle.element.remove();
+                    circles.splice(circles.indexOf(circle), 1);
+                    return;
+                }
+               
+
+                if (rect.left + circle.dx > window.innerWidth - rect.width || rect.left + circle.dx < 0) {
+                    circle.dx *= -1;
+                }
+                if (rect.top + circle.dy > window.innerHeight - rect.height || rect.top + circle.dy < 0) {
+                    circle.dy *= -1;
+                }
+
+                circle.element.style.left = `${rect.left + circle.dx}px`;
+                circle.element.style.top = `${rect.top + circle.dy}px`;
+            });
+
+            for (let i = 0; i < circles.length; i++) {
+                for (let j = i + 1; j < circles.length; j++) {
+                    if (detectCollision(circles[i], circles[j])) {
+                        splitCircle(circles[i]);
+                        splitCircle(circles[j]);
+                        
+                    }
+                }
+            }
+
+            if (animationStarted) requestAnimationFrame(animate);
+        }
+
+
+           
+
+        function startScoreTimer() {
+            scoreInterval = setInterval(() => {
+                timers = incrementTimer(timers)
+                score++; // Incrémente le score
+                document.getElementById('scoreCounter').innerHTML = `Score : ${score}`; // Met à jour l'affichage du score
+                if (circles.length < max)
+                    createCircle()
+            }, 1000); // Incrémente chaque seconde
+        }
+
+        function activateInvincibility() {
+            const myDiv = document.getElementById('damage');
+            if (!invincible) {
+                invincible = true; // Active l'invincibilité
+                myDiv.classList.add('blur');
+                setTimeout(() => {
+                    invincible = false; // Désactive l'invincibilité après 3 secondes
+                    myDiv.classList.remove('blur');
+                }, 1000);
+            }
+        }
+
+        document.addEventListener('mouseover', (event) => {
+            if(event.clientX < 0 || event.clientX > window.innerWidth || event.clientX < 0 || event.clientY > window.innerHeight){
+                alert("revient bebou!!!")
+            }
+            circles.forEach(circle => {
+                const rect = circle.element.getBoundingClientRect();
+                const dx = event.clientX - (rect.left + rect.width / 2);
+                const dy = event.clientY - (rect.top + rect.height / 2);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < circle.size / 2) {
+                    if (!invincible) {
+
+                        heartCount--;
+                        document.getElementById('heartCounter').innerHTML = `Cœurs : ❤️ ${heartCount}`;
+                        circle.element.remove();
+                        const index = circles.indexOf(circle);
+                        if (index > -1) circles.splice(index, 1);
+                        if (heartCount === 0) {
+                            endGame();
+                        }
+                    activateInvincibility();
+                    }
+                }
+            });
+        });
+
+        document.addEventListener('mouseout', (event) => {
+            if(event.clientX < 0 || event.clientX > window.innerWidth || event.clientX < 0 || event.clientY > window.innerHeight){
+                alert("revient bebou!!!")
+            }
+        });
+
+        function submitScore(name, score, key) {
+            fetch('http://localhost:3000/submit-score', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name, score, key }) 
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de la soumission du score');
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                console.log(data.message); 
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+            });
+        }
+
+
+        function endGame() {
+            if (score < 50){
+                alert("Lol")
+                window.location.reload();
+            }
+            else if (score < 10000){
+                alert("Continue à t'entrainer")
+                window.location.reload();
+            }
+            else if (score>1000000){
+                alert("dehors les cheaters !!!");
+                window.location.replace('https://walt.community/article/tricher-aux-examens-pourquoi-cest-vraiment-une-mauvaise-idee');
+            }
+            else{
+                submitScore(pseudo, score, timers);
+                alert("Bien joué " + pseudo + "\n score:" + score);
+                window.location.reload();
+            }
+        }
+
+        animationStarted = true;
+        startScoreTimer();
+        animate();
+        
+
+    </script>
+    </div>
+    <div id="damage"></div>
+    <div id="heartCounter">Cœurs : ❤️ 3</div>
+    <div id="scoreCounter">Score : 0</div>
+</body>
+</html>

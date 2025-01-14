@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  game-app:
+    build:
+      context: ./game  # Path to the folder containing the Dockerfile
+    ports:
+      - "8081:80"
+
+  api:
+    build:
+      context: ./leaderboard-api  # Path to the folder containing the Dockerfile
+    ports:
+      - "3000:3000"
+
+  forum-app:
+    build:
+      context: ./html  # Path to the folder containing the Dockerfile
+    ports:
+      - "8080:80"
