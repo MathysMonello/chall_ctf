@@ -91,9 +91,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section_name'], $_POS
 
     <ul>
         <?php
-        foreach ($_SESSION['sections'] as $section):
-            printSections($section);
-        endforeach; ?>
+        if ($_SESSION['auth'] == true){
+            foreach ($_SESSION['sections'] as $section):
+                printSections($section);
+            endforeach; 
+        }
+        else{
+            header("Location: index.php");
+        exit();
+        }
+        ?>
 
     <a id="logout" href="logout.php">Se déconnecter</a>
     </main>
