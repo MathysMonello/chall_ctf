@@ -91,8 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section_name'], $_POS
 
     <ul>
         <?php
-        if (isset($_SESSION['auth'])){
-        
+        if (isset($_SESSION['auth']) && $_SERVER['auth'] === true){        
             foreach ($_SESSION['sections'] as $section):
                 printSections($section);
             endforeach; 
