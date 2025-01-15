@@ -22,8 +22,7 @@ $file = $_GET["file"];
         <?php
 		echo "<p>THIPMTH2</p>";
 		echo "<p> JE PRINT LE FILE JUSTE EN DESSOUS</p>";
-		echo 'Hello ' . session_status() . '!';
-		echo 'Hello ' . htmlspecialchars($_GET["name"]) . '!';
+		echo 'Hello 2' . session_status() . '!';
 		if (file_exists($file)){
 			echo "<p>Nom du fichier que je trouve : " . $file. "</p>";
 			echo "<p>".file_get_contents($file)."</p>";
