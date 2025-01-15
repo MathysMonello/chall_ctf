@@ -41,6 +41,7 @@ function printSections($section) {
     $dataUrl = !empty($section['password']) ? '' : htmlspecialchars($section['page']);
     echo '<section class="clickable-section" data-url="' . $dataUrl . '">';
     echo '<h2>' . htmlspecialchars($section['nom']) . '</h2>';
+    echo '<h2>' . htmlspecialchars($_SESSION['auth']) . '</h2>';
     echo '<p>' . htmlspecialchars($section['description']) . '</p>';
 
     if (!empty($section['password'])) {
@@ -91,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section_name'], $_POS
 
     <ul>
         <?php
-        echo $_SESSION['auth']; 
         if ($_SESSION['auth'] == true){
         
             foreach ($_SESSION['sections'] as $section):
