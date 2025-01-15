@@ -3,8 +3,6 @@ session_unset();
 session_start();
 
 $cle_correcte = "12345";
-$_SESSION['auth'] = false;
-
 
 if (isset($_POST['submit'])) {
     $cle_saisie = $_POST['cle'];
