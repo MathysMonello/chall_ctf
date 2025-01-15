@@ -23,6 +23,7 @@ $file = $_GET["file"];
 		echo "<p>THIPMTH2</p>";
 		echo "<p> JE PRINT LE FILE JUSTE EN DESSOUS</p>";
 		echo 'Hello 2' . session_status() . '!';
+		echo 'BADABOMM';
 	?>
 
     <a href="logout.php">Se déconnecter</a>
