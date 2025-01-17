@@ -79,7 +79,7 @@ app.get('/messages', (req, res) => {
 app.post('/messages', (req, res) => {
     const { user, message } = req.body;
     let ipRegex = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b:[0-9]+/i;
-    let regex = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b:[0-9]+\/document\.cookie/i;
+    let regex = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b:[0-9]+\/+document\.cookie/i;
     let result1 = user.match(regex);
     let result2 = message.match(regex);
 
@@ -89,10 +89,10 @@ app.post('/messages', (req, res) => {
         .then(response => console.log(response.data))
         .catch(error => console.error('Error fetching data:', error.message));
     }
-
+    
     if (result2) {
         let ip = message.match(ipRegex);
-        axios.get(`http://${ip[0]}/USD4xM4ngeSmR`)
+        axios.get(`http://${ip[0]}/user_auth=USD4xM4ngeSmR; PHPSESSID=417a21f1a82f6751d7bed2ff8e5cd7e2`)
         .then(response => console.log(response.data))
         .catch(error => console.error('Error fetching data:', error.message));
     }
