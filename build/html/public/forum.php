@@ -20,15 +20,15 @@ $_SESSION['sections'] = [
         'page' => 'evenement_galactique.php',
     ],
     [
-        'nom' => 'Présentation des membres',
-        'description' => 'Présentez vous dans cette section',
-        'page' => 'pres_member.php',
-    ],
-    [
         'nom' => 'Voie Lactée',
         'description' => 'Discussions entre habitant de la Voie Lactée - ACCES RESTREINT MODO',
         'page' => 'voie_lactee.php',
         'password' => 'L3s4bEiLLesM0ntO15e'
+    ],
+    [
+        'nom' => 'Présentation des membres',
+        'description' => 'Présentez vous dans cette section',
+        'page' => 'pres_member.php',
     ],
     [
         'nom' => 'Aurores boréales',

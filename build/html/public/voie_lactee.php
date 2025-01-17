@@ -60,56 +60,12 @@ if ($response) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog PHP</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            padding: 20px;
-        }
-        .post {
-            background-color: #fff;
-            margin-bottom: 20px;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        .post h2 {
-            color: #2c3e50;
-        }
-        .post p {
-            font-size: 16px;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        form input, form textarea, form button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        form button {
-            background-color: #2c3e50;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        form button:hover {
-            background-color: #34495e;
-        }
-    </style>
+    <link href="pres_membre.css" rel="stylesheet" />
+    <title>Voie Lactee</title>
 </head>
 <body>
 
-    <h1>Bienvenue sur le Blog</h1>
+    <h1>Secte des MODOs</h1>
     <p>Envoyez un nouveau message :</p>
 
     <form method="POST">
@@ -118,7 +74,6 @@ if ($response) {
         <button type="submit">Envoyer</button>
     </form>
 
-    <h2>Voici les derniers articles récupérés depuis l'API :</h2>
 
     <?php
     foreach ($data as $post) {
