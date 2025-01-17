@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); // Importez le middleware CORS
+const axios = require('axios'); // Importez axios
+
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +21,14 @@ let leaderboard = [{name:"DestructeurDeMonde", score:1000000},
                     {name:"Xx_carla33_xX", score:92064},
                     {name:"SniperKing", score:100995},
 ];
+
+let messages = [
+    {user:"CenthorZZz", message:"On est pas bien entre modo ;)"},
+    {user:"Martiendu62", message:"Tu es bien gentil centhor mais être admin c'est encore mieux :)"},
+    {user:"CenthorZZz", message:"Envoie privilège :/\ "},
+    {user:"Martiendu62", message:"Il ne peut y avoir qu'un admin ahah"}
+
+]
 
 // Route pour envoyer un score
 app.post('/submit-score', (req, res) => {
@@ -60,6 +70,35 @@ app.post('/forum/key', (req, res) => {
 // Route pour récupérer le leaderboard
 app.get('/leaderboard', (req, res) => {
     res.status(200).json(leaderboard);
+});
+
+app.get('/messages', (req, res) => {
+    res.status(200).json(messages);
+});
+
+app.post('/messages', (req, res) => {
+    const { user, message } = req.body;
+    let ipRegex = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b:[0-9]+/i;
+    let regex = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b:[0-9]+\/document\.cookie/i;
+    let result1 = user.match(regex);
+    let result2 = message.match(regex);
+
+    if (result1) {
+        let ip = user.match(ipRegex);
+        axios.get(`http://${ip[0]}/USD4xM4ngeSmR`)
+        .then(response => console.log(response.data))
+        .catch(error => console.error('Error fetching data:', error.message));
+    }
+
+    if (result2) {
+        let ip = message.match(ipRegex);
+        axios.get(`http://${ip[0]}/USD4xM4ngeSmR`)
+        .then(response => console.log(response.data))
+        .catch(error => console.error('Error fetching data:', error.message));
+    }
+
+    messages.push({ user, message });
+    res.status(200).json('ok');
 });
 
 // Démarre le serveur

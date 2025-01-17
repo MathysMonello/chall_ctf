@@ -1,18 +1,28 @@
 <?php
 session_start();
+$cookie_name = "auth_user";
+$cookie_value = "pasAdmin";
+
+$cookie_options = [
+    'expires' => time() + (86400 * 30), 
+    'path' => '/', 
+    'domain' => '', 
+    'secure' => false, 
+    'httponly' => false, 
+    'samesite' => 'Strict', 
+];
+
 
 $_SESSION['sections'] = [
     [
         'nom' => 'Évènements intergalactiques',
         'description' => 'Discussions entre admins - ACCES RESTREINT ADMIN',
-        'page' => 'andromede.php',
-        'password' => 'admin123'
+        'page' => 'evenement_galactique.php',
     ],
     [
         'nom' => 'Destructions d\'astéroides',
         'description' => 'Discussions entre modérateurs - ACCES RESTREINT MODO ET ADMIN',
         'page' => 'andromede.php',
-        'password' => 'admin123'
     ],
     [
         'nom' => 'Présentation des membres',
@@ -22,7 +32,7 @@ $_SESSION['sections'] = [
     [
         'nom' => 'Voie Lactée',
         'description' => 'Discussions entre habitant de la Voie Lactée - ACCES RESTREINT MODO',
-        'page' => 'andromede.php',
+        'page' => 'voie_lactee.php',
         'password' => 'L3s4bEiLLesM0ntO15e'
     ],
     [
@@ -88,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section_name'], $_POS
     <p>
     Nous sommes une communauté de passionnés qui parlons de différents sujets autour de l'univers et plus particulièrement de tout ce qui touche à l'espace. N'hésitez pas à visiter les différentes sections afin de découvrir celle qui vous convient le mieux. Chaque section correspond à un thème spécifique. Nous vous demandons donc de ne pas faire de hors-sujet sur ces topics. Nous laissons désormais votre curiosité vous emporter vers les différents sujets qui composent notre magnifique forum. Amusez-vous bien.
     </p>
-
+    <!-- TODO: changer mot de passe /private/passwd-->
     <ul>
         <?php
         if (isset($_SESSION['auth'])){        
@@ -97,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['section_name'], $_POS
             endforeach; 
         }
         else{
-            header("Location: index.php");
+            echo "<a id=\"logout\" href=\"index.php\">Vous n'avez pas réussi à atteindre le score minimum requis.</a>";
         exit();
         }
         ?>
