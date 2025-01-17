@@ -66,14 +66,14 @@ if ($response) {
 <body>
 
     <h1>Secte des MODOs</h1>
-    <p>Envoyez un nouveau message :</p>
-
-    <form method="POST">
-        <input type="text" name="user" placeholder="Votre nom" required>
-        <textarea name="message" placeholder="Votre message" rows="4" required></textarea>
-        <button type="submit">Envoyer</button>
-    </form>
-
+    
+    <li>
+        <form method="POST">
+            <input type="text" name="user" placeholder="Votre nom" required>
+            <textarea name="message" placeholder="Votre message" rows="4" required></textarea>
+            <button type="submit">Envoyer</button>
+        </form>
+    </li>
 
     <?php
     foreach ($data as $post) {
