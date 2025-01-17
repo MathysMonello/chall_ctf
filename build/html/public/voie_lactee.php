@@ -60,7 +60,7 @@ if ($response) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="pres_membre.css" rel="stylesheet" />
+    <link href="vl.css" rel="stylesheet" />
     <title>Voie Lactee</title>
 </head>
 <body>
@@ -77,10 +77,10 @@ if ($response) {
 
     <?php
     foreach ($data as $post) {
-        echo '<div class="post">';
+        echo '<li class="post">';
         echo '<h2>' . $post['user'] . '</h2>';
         echo '<p>' . $post['message'] . '</p>';
-        echo '</div>';
+        echo '</li>';
     }
     ?>
 

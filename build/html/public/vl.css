@@ -1,0 +1,71 @@
+h1 {
+  font-size: 60px;
+  text-align: center;
+  text-shadow: #F97D37 1px 0 50px;
+  color: #efce13;
+}
+
+body {
+  background: black;
+  color: white;
+}
+
+p {
+  color: yellow;
+  border: 20px orange;
+}
+
+li {
+  border-top: 2px solid #E16925;
+  padding: .5em;
+  background-color: black; /* Utilisation d'une couleur de fond simple */
+  transition: background-color 1s, box-shadow 1s; /* Transitions pour le fond et les ombres */
+  box-shadow: 1px 1px 1px 3px black;
+}
+
+li:hover {
+  box-shadow: 1px 1px 1px 3px red;
+  cursor: pointer;
+  background-color: red; /* Changer de couleur au survol */
+  background-image: radial-gradient(#E16925, red);
+  transition: background-color 1s, box-shadow 1s;
+}
+
+#sous-titre {
+  font-size: 32px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form input {
+  width: 400px;
+  height: 20px;
+  border-radius: 30px;
+  text-align: center;
+}
+
+form textarea {
+   margin-top: 10px;
+  width: 800px;
+  height: 80px;
+  border-radius: 20px;
+  text-align: center;
+   background-color: #7BACA5;
+  border: none;
+}
+
+
+form button {
+  margin-top: 5px;
+  width: 100px;
+  height: 50px;
+  border-radius: 30px;
+  text-align: center;
+  background-color: #E16925;
+  border: none;
+}
+
+
