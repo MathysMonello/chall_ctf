@@ -277,6 +277,7 @@
             })
             .then(data => {
                 console.log(data.message); 
+                return data.code;
             })
             .catch(error => {
                 console.error('Erreur:', error);
@@ -289,7 +290,7 @@
                 alert("Lol")
                 window.location.reload();
             }
-            else if (score < 10000){
+            else if (score < 1000){
                 alert("Continue à t'entrainer")
                 window.location.reload();
             }
@@ -298,8 +299,8 @@
                 window.location.replace('https://walt.community/article/tricher-aux-examens-pourquoi-cest-vraiment-une-mauvaise-idee');
             }
             else{
-                submitScore(pseudo, score, timers);
-                alert("Bien joué " + pseudo + "\n score:" + score);
+                code = submitScore(pseudo, score, timers);
+                alert("Bien joué " + pseudo + "\n score:" + score) + "le mot de passe est " + code ;
                 window.location.reload();
             }
         }

@@ -2,7 +2,7 @@
 session_unset();
 session_start();
 
-$cle_correcte = "12345";
+$cle_correcte = "j4im4ng3uNk1w1";
 
 if (isset($_POST['submit'])) {
     $cle_saisie = $_POST['cle'];

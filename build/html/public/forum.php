@@ -20,11 +20,6 @@ $_SESSION['sections'] = [
         'page' => 'evenement_galactique.php',
     ],
     [
-        'nom' => 'Destructions d\'astéroides',
-        'description' => 'Discussions entre modérateurs - ACCES RESTREINT MODO ET ADMIN',
-        'page' => 'andromede.php',
-    ],
-    [
         'nom' => 'Présentation des membres',
         'description' => 'Présentez vous dans cette section',
         'page' => 'pres_member.php',

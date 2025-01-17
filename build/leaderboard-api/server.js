@@ -45,7 +45,7 @@ app.post('/submit-score', (req, res) => {
             // Limite le leaderboard aux 10 meilleurs scores
             leaderboard = leaderboard.slice(0, 10);
 
-            res.status(200).json({ message: 'Score ajouté avec succès! flag{CAMPEON DEL MUNDO}' });
+            res.status(200).json({ message: 'Score ajouté avec succès!' , code:'j4im4ng3uNk1w1'});
             }
         else{
             res.status(400).json({ error: 'Mauvaise clé' });
