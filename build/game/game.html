@@ -261,55 +261,50 @@
             }
         });
 
-        function submitScore(name, score, key) {
-            fetch('http://localhost:3000/submit-score', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name, score, key }) 
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erreur lors de la soumission du score');
-                }
-                return response.json(); 
-            })
-            .then(data => {
-                console.log(data.message); 
-                return data.code;
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-            });
+async function submitScore(name, score, key) {
+    try {
+        const response = await fetch('http://localhost:3000/submit-score', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ name, score, key })
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la soumission du score');
         }
 
+        const data = await response.json();
+        console.log(data.message); 
+        return data.code;
+    } catch (error) {
+        console.error('Erreur:', error);
+        return null; 
+    }
+}
 
-        function endGame() {
-            if (score < 50){
-                alert("Lol")
-                window.location.reload();
-            }
-            else if (score < 1000){
-                alert("Continue à t'entrainer")
-                window.location.reload();
-            }
-            else if (score>1000000){
-                alert("dehors les cheaters !!!");
-                window.location.replace('https://walt.community/article/tricher-aux-examens-pourquoi-cest-vraiment-une-mauvaise-idee');
-            }
-            else{
-                let code = submitScore(pseudo, score, timers);
-                if (code){
-                    alert("Bien joué " + pseudo + "\n score:" + score + " le mot de passe est " + code) ;        
-                }
-                else{
-                    alert("you cheaéter motherfucker") ;        
-
-                }
-                window.location.reload();
-            }
+async function endGame() {
+    if (score < 50) {
+        alert("Lol");
+        window.location.reload();
+    } else if (score < 1000) {
+        alert("Continue à t'entrainer");
+        window.location.reload();
+    } else if (score > 1000000) {
+        alert("Dehors les cheaters !!!");
+        window.location.replace('https://walt.community/article/tricher-aux-examens-pourquoi-cest-vraiment-une-mauvaise-idee');
+    } else {
+        const code = await submitScore(pseudo, score, timers);
+        if (code) {
+            alert("Bien joué " + pseudo + "\nscore:" + score + " le mot de passe est " + code);
+        } else {
+            alert("GRRRRRIK BAW");
         }
+        window.location.reload();
+    }
+}
+
 
         animationStarted = true;
         startScoreTimer();
