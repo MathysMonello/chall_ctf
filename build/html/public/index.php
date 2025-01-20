@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 
     <form action="index.php" method="POST">
         <label for="cle">Insérer la clé</label>
-        <input type="text" id="cle" name="cle" required>
+        <input type="password" id="cle" name="cle" required>
         <button type="submit" name="submit">Se connecter</button>
     </form>
     <div id="asteroid1" style="width: 400px; height: 400px; overflow: hidden;">

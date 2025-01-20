@@ -230,7 +230,7 @@
 
         document.addEventListener('mouseover', (event) => {
             if(event.clientX < 0 || event.clientX > window.innerWidth || event.clientX < 0 || event.clientY > window.innerHeight){
-                alert("revient bebou!!!")
+                alert("reviens!!!")
             }
             circles.forEach(circle => {
                 const rect = circle.element.getBoundingClientRect();
@@ -257,7 +257,7 @@
 
         document.addEventListener('mouseout', (event) => {
             if(event.clientX < 0 || event.clientX > window.innerWidth || event.clientX < 0 || event.clientY > window.innerHeight){
-                alert("revient bebou!!!")
+                alert("reviens!!!")
             }
         });
 
@@ -286,7 +286,7 @@ async function submitScore(name, score, key) {
 
 async function endGame() {
     if (score < 50) {
-        alert("Lol");
+        alert("ouch");
         window.location.reload();
     } else if (score < 1000) {
         alert("Continue à t'entrainer");
@@ -299,7 +299,7 @@ async function endGame() {
         if (code) {
             alert("Bien joué " + pseudo + "\nscore:" + score + " le mot de passe est " + code);
         } else {
-            alert("GRRRRRIK BAW");
+            alert("Erreur : Timers/Score incorrecte");
         }
         window.location.reload();
     }
